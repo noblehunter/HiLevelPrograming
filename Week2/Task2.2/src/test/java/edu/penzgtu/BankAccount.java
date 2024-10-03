@@ -10,15 +10,15 @@ public class BankAccount {
 
     public void deposit(double amount) {
         balance += amount;
-        System.out.println(amount + " deposited successfully");
+        System.out.println(amount + " депозит успешен");
     }
 
     public void withdraw(double amount) {
         if (amount <= balance) {
             balance -= amount;
-            System.out.println(amount + " withdrawn successfully");
+            System.out.println(amount + " вывод успешен");
         } else {
-            System.out.println("Insufficient funds");
+            System.out.println("Недостаточно средств");
         }
     }
 
@@ -28,15 +28,15 @@ public class BankAccount {
 
     public static void main(String[] args) {
         BankAccount account = new BankAccount("123456", 1000.0);
-        System.out.println("Current balance: " + account.getBalance());
+        System.out.println("Текущий баланс: " + account.getBalance());
 
         account.deposit(500.0);
-        System.out.println("Current balance: " + account.getBalance());
+        System.out.println("Текущий баланс: " + account.getBalance());
 
         account.withdraw(200.0);
-        System.out.println("Current balance: " + account.getBalance());
+        System.out.println("Текущий баланс: " + account.getBalance());
 
         account.withdraw(1500.0);
-        System.out.println("Current balance: " + account.getBalance());
+        System.out.println("Текущий баланс: " + account.getBalance());
     }
 }

@@ -21,7 +21,7 @@ public class Octagon {
 
         octagon.setInnerRadius(5.0);
 
-        System.out.println("Area of octagon: " + octagon.calculateArea());
-        System.out.println("Perimeter of octagon: " + octagon.calculatePerimeter());
+        System.out.println("Зона октагона: " + octagon.calculateArea());
+        System.out.println("Периметр октагона: " + octagon.calculatePerimeter());
     }
 }

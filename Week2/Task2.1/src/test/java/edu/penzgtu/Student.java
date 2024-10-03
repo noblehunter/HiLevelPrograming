@@ -67,8 +67,8 @@ public class Student {
 
     // toString method
     public String toString() {
-        return "Student{name='" + name + "', birthDate='" + birthDate + "', group='" + group +
-                "', studentId=" + studentId + ", averageScore=" + averageScore + "}";
+        return "Студент Имя:='" + name + "', Дата рождения='" + birthDate + "', группа='" + group +
+                "', Индификатор студента=" + studentId + ", Средняя отценка=" + averageScore + "}";
     }
 
     // Method to check if student is excellent
@@ -77,15 +77,15 @@ public class Student {
     }
 
     public static void main(String[] args) {
-        Student student1 = new Student("Alice", "2000-05-15", "A1", 101, 4.9);
-        Student student2 = new Student("Bob", "1999-11-30", "B2", 102, 4.5);
+        Student student1 = new Student("Алиса", "2000-05-15", "A1", 101, 4.9);
+        Student student2 = new Student("Михаил", "1999-11-30", "B2", 102, 4.5);
 
         System.out.println(student1.toString());
-        System.out.println("Age of " + student1.getName() + ": " + student1.getAge() + " years");
-        System.out.println("Is " + student1.getName() + " an excellent student? " + student1.isExcellentStudent());
+        System.out.println("Лет " + student1.getName() + ": " + student1.getAge() + " лет");
+        System.out.println("Является ли " + student1.getName() + " студентом? " + student1.isExcellentStudent());
 
         System.out.println(student2.toString());
-        System.out.println("Age of " + student2.getName() + ": " + student2.getAge() + " years");
-        System.out.println("Is " + student2.getName() + " an excellent student? " + student2.isExcellentStudent());
+        System.out.println("Лет " + student2.getName() + ": " + student2.getAge() + " лет");
+        System.out.println("Является ли " + student2.getName() + " студентом? " + student2.isExcellentStudent());
     }
 }

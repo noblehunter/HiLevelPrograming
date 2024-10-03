@@ -44,18 +44,18 @@ class Book {
 
 public class Main {
     public static void main(String[] args) {
-        Author author = new Author("J.K. Rowling", 1965);
+        Author author = new Author("Джоан Кей Роулинг", 1965);
         Book book = new Book(author);
 
-        System.out.println("Author: " + book.getAuthor().getName());
-        System.out.println("Birth Year: " + book.getAuthor().getBirthYear());
+        System.out.println("Автор: " + book.getAuthor().getName());
+        System.out.println("Год рождения: " + book.getAuthor().getBirthYear());
 
         // Изменение информации об авторе
-        book.getAuthor().setName("George Orwell");
+        book.getAuthor().setName("Джордж Оруэлл");
         book.getAuthor().setBirthYear(1903);
 
-        System.out.println("Author: " + book.getAuthor().getName());
-        System.out.println("Birth Year: " + book.getAuthor().getBirthYear());
+        System.out.println("Автор: " + book.getAuthor().getName());
+        System.out.println("Год рождения: " + book.getAuthor().getBirthYear());
     }
 }
 

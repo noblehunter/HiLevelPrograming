@@ -29,12 +29,12 @@ public class Person {
     }
 
     public static void main(String[] args) {
-        Person person1 = new Person("Alice", 30);
+        Person person1 = new Person("Алиса", 30);
         Person person2 = new Person();
-        person2.setName("Bob");
+        person2.setName("Борис");
         person2.setAge(25);
 
-        System.out.println("Person 1: Name - " + person1.getName() + ", Age - " + person1.getAge());
-        System.out.println("Person 2: Name - " + person2.getName() + ", Age - " + person2.getAge());
+        System.out.println("Person 1: Имя - " + person1.getName() + ", Лет - " + person1.getAge());
+        System.out.println("Person 2: Имя - " + person2.getName() + ", Лет - " + person2.getAge());
     }
 }
