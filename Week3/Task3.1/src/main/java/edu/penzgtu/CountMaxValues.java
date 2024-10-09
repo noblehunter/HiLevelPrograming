@@ -3,7 +3,7 @@ package edu.penzgtu;
 public class CountMaxValues {
     public static void main(String[] args) {
         // Пример входного массива
-        double[] numbers = {1, 5, 10, 10, 3, -10};
+        double[] numbers = {1, 5, 13, 13, 3, -10};
 
         // Вызов функции для подсчета количества максимальных значений
         int count = countMaxValues(numbers);
