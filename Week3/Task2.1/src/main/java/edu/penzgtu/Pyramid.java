@@ -16,9 +16,9 @@ public class Pyramid {
             for (int j = i; j < height; j++) {
                 System.out.print(" ");
             }
-            // Печатаем звездочки
+            // Печатаем решоточки
             for (int k = 1; k <= (2 * i - 1); k++) {
-                System.out.print("@");
+                System.out.print("#");
             }
             // Переход на следующую строку
             System.out.println();
