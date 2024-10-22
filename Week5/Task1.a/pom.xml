@@ -4,10 +4,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>edu.penzgtu</groupId>
-  <artifactId>Task1.1</artifactId>
+  <artifactId>Task1.a</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>Task1.1</name>
+  <name>Task1.a</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -63,7 +63,6 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <version>3.3.0</version>
         </plugin>
-
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
@@ -73,21 +72,7 @@
               <manifest>
                 <addClasspath>true</addClasspath>
                 <classpathPrefix>lib/</classpathPrefix>
-                <mainClass>edu.penzgtu.Main
-              </manifest>
-            </archive>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>3.1.0</version>
-          <configuration>
-            <archive>
-              <manifest>
-                <addClasspath>true</addClasspath>
-                <classpathPrefix>lib/</classpathPrefix>
-                <mainClass>edu.penzgtu.OccurrenceCounter
+                <mainClass>edu.penzgtu.CatchExample</mainClass>
               </manifest>
             </archive>
           </configuration>
