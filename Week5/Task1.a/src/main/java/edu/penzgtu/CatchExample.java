@@ -3,40 +3,42 @@ package edu.penzgtu;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CatchExample {
     public static void main(String[] args) {
         // Укажите путь к вашему текстовому файлу
         String filePath = "C:/Users/NobleHunter/Desktop/Projekt/HiLevelPrograming/Week5/Task1.a/src/main/java/edu/penzgtu/numbers.txt";
 
-        // Сначала мы прочитаем файл, чтобы узнать количество строк
-        int count = 0;
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        // Список для хранения строк файла
+        List<String> lines = new ArrayList<>();
+        BufferedReader br = null;
+
+        try {
+            br = new BufferedReader(new FileReader(filePath));
             String line;
             while ((line = br.readLine()) != null) {
-                count++;
+                lines.add(line); // Добавляем строку в список
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Теперь создаем массив для хранения строк
-        String[] data = new String[count]; // Объявление массива // Снова читаем файл, чтобы заполнить массив
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            int index = 0;
-            while ((line = br.readLine()) != null) {
-                // Сохраняем строку в массив
-                data[index] = line;
-                index++;
+            System.err.println("Ошибка при чтении файла: " + e.getMessage());
+            return; // Завершаем программу, если произошла ошибка
+        } finally {
+            // Закрываем BufferedReader в блоке finally, если он был открыт
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    System.err.println("Ошибка при закрытии файла: " + e.getMessage());
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
-        // Выводим массив на экран
-        for (String item : data) {
+        // Выводим содержимое списка на экран
+        for (String item : lines) {
             System.out.println(item);
         }
     }
 }
+
