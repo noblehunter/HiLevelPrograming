@@ -1,19 +1,11 @@
 package edu.penzgtu;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextInputDialog;
-import javafx.stage.Stage;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ForkJoinPool;
@@ -45,25 +37,29 @@ public class HousePriceAnalysis extends Application {
                 showErrorAlert("Ошибка при обработке файла: " + e.getMessage());
             }
         } else {
-            primaryStage.close(); // Закрываем окно, если пользователь отменил ввод
+            primaryStage.close();
         }
     }
 
     private Map<String, Map<Integer, Double>> processData() throws IOException {
-        Map<String, Map<Integer, Double>> cityYearMaxPrices = new HashMap<>();
+        List<String> lines = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(DATA_FILE))) {
+            br.readLine(); // Пропускаем заголовок
             String line;
-            br.readLine(); // Skip header line
-
-            ForkJoinPool pool = new ForkJoinPool();
-            pool.invoke(new DataProcessingTask(br, cityYearMaxPrices));
-            pool.shutdown();
-
+            while ((line = br.readLine()) != null) {
+                lines.add(line);
+            }
         } catch (IOException e) {
             throw new IOException("Ошибка чтения файла: " + e.getMessage());
         }
+
+        Map<String, Map<Integer, Double>> cityYearMaxPrices = new HashMap<>();
+        ForkJoinPool pool = new ForkJoinPool();
+        pool.invoke(new DataProcessingTask(lines, cityYearMaxPrices));
+        pool.shutdown();
         return cityYearMaxPrices;
     }
+
 
     private void showChart(Stage primaryStage, Map<String, Map<Integer, Double>> cityYearMaxPrices) {
         primaryStage.setTitle("Гистограммы максимальных цен на жилье");
@@ -89,7 +85,6 @@ public class HousePriceAnalysis extends Application {
         primaryStage.show();
     }
 
-
     private void showErrorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Ошибка");
@@ -98,31 +93,39 @@ public class HousePriceAnalysis extends Application {
         alert.showAndWait();
     }
 
+
     private static class DataProcessingTask extends RecursiveAction {
-        private final BufferedReader reader;
+        private final List<String> lines;
         private final Map<String, Map<Integer, Double>> cityYearMaxPrices;
 
-        public DataProcessingTask(BufferedReader reader, Map<String, Map<Integer, Double>> cityYearMaxPrices) {
-            this.reader = reader;
+        public DataProcessingTask(List<String> lines, Map<String, Map<Integer, Double>> cityYearMaxPrices) {
+            this.lines = lines;
             this.cityYearMaxPrices = cityYearMaxPrices;
         }
 
         @Override
         protected void compute() {
-            try {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String[] data = line.split(",");
-                    if (data.length >= 3) { // Проверка на наличие достаточного количества данных в строке
-                        String city = data[1];
-                        int year = Integer.parseInt(data[0].substring(0, 4));
-                        double price = Double.parseDouble(data[2]);
+            if (lines.size() <= 1) {
+                processData(lines);
+            } else {
+                int midpoint = lines.size() / 2;
+                List<String> leftLines = lines.subList(0, midpoint);
+                List<String> rightLines = lines.subList(midpoint, lines.size());
 
-                        cityYearMaxPrices.computeIfAbsent(city, k -> new HashMap<>()).compute(year, (k, v) -> Math.max(v == null ? 0 : v, price));
-                    }
+                invokeAll(new DataProcessingTask(leftLines, cityYearMaxPrices),
+                        new DataProcessingTask(rightLines, cityYearMaxPrices));
+            }
+        }
+        private void processData(List<String> dataLines) {
+            for (String line : dataLines) {
+                String[] data = line.split(",");
+                if (data.length >= 3) {
+                    String city = data[1];
+                    int year = Integer.parseInt(data[0].substring(0, 4));
+                    double price = Double.parseDouble(data[2]);
+
+                    cityYearMaxPrices.computeIfAbsent(city, k -> new HashMap<>()).compute(year, (k, v) -> Math.max(v == null ? 0 : v, price));
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }
